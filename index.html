@@ -3,406 +3,265 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Milhas — Grupo de Estratégias Avançadas (Hub por Tópicos)</title>
-<meta name="description" content="Página estática por tópicos com links de interesse: estratégias, programas, ferramentas, promoções, comunidades e tutoriais." />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E✈️%3C/text%3E%3C/svg%3E">
+<title>Milhas &amp; Viagens — Hub</title>
+<meta name="description" content="Hub estático por tópicos com links de interesse: Destaques, Programas & Alianças, Transferências & Cartões, Hotéis & Parceiros e Buscas. Busca global e favoritos." />
 <style>
-  :root{
-    --bg:#0b1220; --card:#101a2b; --text:#e7eef8; --muted:#a9b8d0; --brand:#4cc9f0;
-    --chip:#17263e; --chip-b:#243758; --link:#8be1ff; --stroke:#21324f;
-  }
+  :root{ --bg:#0b1220; --card:#101a2b; --text:#e7eef8; --muted:#a9b8d0; --brand:#4cc9f0;
+         --chip:#17263e; --chip-b:#243758; --link:#8be1ff; --stroke:#21324f; --accent:#2dd4bf; }
   *{box-sizing:border-box}
-  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Helvetica Neue","Noto Sans",sans-serif}
-  a{color:var(--link);text-decoration:none} a:hover{text-decoration:underline}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu}
+  a{color:var(--link);text-decoration:none}
   .container{max-width:1200px;margin:0 auto;padding:22px}
-  header{display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap}
-  .hgroup{display:flex;gap:10px;align-items:center}
-  h1{margin:0;font-size:clamp(20px,3.6vw,28px)}
-  .sub{color:var(--muted);font-size:14px;margin-top:2px}
-  .toolbar{display:flex;gap:8px;flex-wrap:wrap}
-  .btn{background:var(--chip);border:1px solid var(--chip-b);color:var(--text);padding:8px 12px;border-radius:10px;cursor:pointer}
-  .btn.brand{background:linear-gradient(90deg,#3a86ff,#4cc9f0);border:none}
-  .searchbar{display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:8px 12px;margin:14px 0}
-  .searchbar input{flex:1;background:transparent;border:none;color:var(--text);outline:none}
-  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 6px}
-  .tab{padding:8px 12px;border-radius:999px;background:var(--chip);border:1px solid var(--chip-b);cursor:pointer;font-size:14px}
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  h1{margin:0;font-size:clamp(22px,4vw,30px)}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap}
+  .tab{background:var(--chip);border:1px solid var(--chip-b);border-radius:999px;padding:8px 12px;cursor:pointer}
   .tab.active{background:var(--brand);color:#001018;border-color:transparent}
-  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:6px 0 2px}
-  .chip{font-size:12px;padding:6px 10px;border-radius:999px;background:#11203a;border:1px solid #243758;color:var(--muted);cursor:pointer}
-  .chip.active{background:#274163;color:#eaf2ff}
+  .searchbar{display:flex;gap:8px;align-items:center;background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:8px 12px;margin:12px 0}
+  .searchbar input{flex:1;background:transparent;border:none;color:var(--text);outline:none}
+  .banner{margin:8px 0;padding:10px 14px;border:1px dashed var(--accent);background:rgba(45,212,191,0.08);border-radius:12px;color:#b8fff3}
   .group{margin-top:12px;border:1px solid var(--stroke);border-radius:14px;overflow:hidden}
   .group h2{margin:0;padding:10px 14px;background:#0f1c30;border-bottom:1px solid var(--stroke);font-size:15px}
+  .group .intro{padding:10px 14px;color:var(--muted);border-bottom:1px dashed var(--stroke);font-size:14px;background:#0f1c30}
   .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;padding:12px}
   .card{background:var(--card);border:1px solid var(--stroke);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:6px;min-height:118px}
-  .card h3{margin:0 0 2px;font-size:16px}
+  .card h3{margin:0 0 4px;font-size:16px}
   .card p{margin:0;color:var(--muted);font-size:14px}
-  .meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
-  .tag{font-size:11px;background:#0e1b32;border:1px solid #21324f;color:#c9d6eb;padding:3px 8px;border-radius:999px}
-  .star{margin-left:auto;cursor:pointer}
-  .star[data-active="true"]{color:#ffd166}
-  details.tools{background:#0f1c30;border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-top:12px}
+  .meta{display:flex;justify-content:space-between;align-items:center;margin-top:auto}
+  .pill{font-size:11px;padding:3px 8px;border:1px solid #21324f;border-radius:999px;background:#0e1b32;color:#c9d6eb}
+  .star{cursor:pointer}
   footer{margin:26px 0;color:var(--muted);font-size:13px}
-  .hidden{display:none}
-  .kbd{border:1px solid #334766;border-radius:6px;padding:2px 6px;background:#0f1c30;color:#cbd5e1;font-size:12px}
 </style>
 </head>
 <body>
 <div class="container">
   <header>
-    <div class="hgroup">
-      <div style="font-size:26px">✈️</div>
-      <div>
-        <h1>Grupo de Estratégias Avançadas de Milhas</h1>
-        <div class="sub">Hub estático por <strong>tópicos</strong> — curadoria de sites, pesquisas, programas, ferramentas e promoções.</div>
-      </div>
-    </div>
-    <div class="toolbar">
-      <button class="btn brand" id="toggleTheme">Alternar tema</button>
-      <button class="btn" id="showFavorites">⭐ Favoritos</button>
-      <button class="btn" id="addBtn">+ Adicionar link</button>
-      <button class="btn" id="exportBtn">Exportar</button>
-      <button class="btn" id="importBtn">Importar</button>
-    </div>
+    <h1>✈️ Milhas &amp; Viagens</h1>
+    <div class="tabs" id="tabs"></div>
   </header>
 
   <div class="searchbar">
     <span>🔎</span>
-    <input id="searchInput" placeholder="Buscar por nome, descrição, tag ou subtópico (ex.: 'Smiles', 'sweet spot', 'Star Alliance')"/>
-    <span class="kbd">/</span>
+    <input id="searchInput" placeholder="Buscar em todas as categorias (ex.: 'Smiles', 'Hyatt', 'Avios', 'Google Flights')" />
   </div>
 
-  <div class="tabs" id="tabs"></div>
-  <div class="chips" id="chips"></div>
-
+  <div id="banner"></div>
   <div id="groups"></div>
 
-  <details class="tools">
-    <summary><strong>Atalhos úteis</strong></summary>
-    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">
-      <a class="btn" href="https://www.google.com/travel/flights" target="_blank" rel="noopener">Google Flights</a>
-      <a class="btn" href="https://matrix.itasoftware.com" target="_blank" rel="noopener">ITA Matrix</a>
-      <a class="btn" href="https://seats.aero" target="_blank" rel="noopener">Seats.aero</a>
-      <a class="btn" href="https://awardwallet.com" target="_blank" rel="noopener">AwardWallet</a>
-      <a class="btn" href="https://www.expertflyer.com/" target="_blank" rel="noopener">ExpertFlyer</a>
-      <a class="btn" href="https://point.me" target="_blank" rel="noopener">Point.Me</a>
-      <a class="btn" href="https://www.gcmap.com/" target="_blank" rel="noopener">Great Circle Mapper</a>
-      <a class="btn" href="https://www.skyscanner.com.br" target="_blank" rel="noopener">Skyscanner</a>
-    </div>
-  </details>
-
-  <footer>
-    <div>💡 Página 100% estática (HTML/CSS/JS). Favoritos e links adicionados ficam no seu navegador (LocalStorage).</div>
-    <div>✍️ Personalize com <em>+ Adicionar link</em> ou <em>Exportar</em> para compartilhar a curadoria.</div>
-  </footer>
-</div>
-
-<!-- Modal -->
-<div id="modal" class="hidden" style="position:fixed;inset:0;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:16px;z-index:20">
-  <div style="width:min(900px,95vw);background:#0b1220;border:1px solid #22324f;border-radius:14px;padding:16px">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px">
-      <h3 id="modalTitle" style="margin:0">Modal</h3>
-      <button class="btn" id="closeModal">Fechar</button>
-    </div>
-    <div id="modalBody"></div>
-  </div>
+  <footer>⭐ Favoritos ficam salvos localmente (LocalStorage) e aparecem na aba própria.</footer>
 </div>
 
 <script>
-/* ===== 1) TÓPICOS, SUBTÓPICOS & LINKS (curadoria) ===== */
+/* ===== Intros e Dados completos (restaurados) ===== */
+const TOPIC_INTRO = {
+  "Transferências & Cartões": "Converta pontos bancários para programas aéreos com bônus e prazos de crédito diferentes. Avalie parcerias ativas, valor por tabela e a possibilidade de mover Avios entre carteiras compatíveis.",
+  "Hotéis & Parceiros": "Ganhe e use pontos em redes de hotéis e parceiros. Alguns programas de hotéis transferem para aéreas — verifique taxa de conversão e promoções."
+};
 const DATA = {
-  topicos: [
-    "Destaques 🇧🇷",
-    "Estratégias de Emissão",
-    "Programas & Alianças",
-    "Transferências & Cartões",
-    "Ferramentas de Busca",
-    "Hotéis & Parceiros",
-    "Alertas & Promoções",
-    "Pesquisas & Comunidades",
-    "Regras & Políticas",
-    "Tutoriais & Guias",
-    "Planilhas & Templates"
-  ],
-  tags: [
-    "Brasil","Alianças","Star Alliance","Oneworld","SkyTeam",
-    "Sweet spot","Stopover","Open-jaw","Status match","Upgrade",
-    "Transferência","Avios","Promo","Ferramenta","Guia"
-  ],
+  topicos: ["⭐ Favoritos","Destaques 🇧🇷","Programas & Alianças","Transferências & Cartões","Hotéis & Parceiros","Buscas"],
   links: [
-    /* --- Destaques 🇧🇷 --- */
-    {t:"Passageiro de Primeira",d:"Blog de referência no Brasil (reviews, estratégias, cartões).",u:"https://passageirodeprimeira.com/",top:"Destaques 🇧🇷",sub:"Portais BR",tags:["Brasil","Guia"]},
-    {t:"Pontos pra Voar",d:"Análises, notícias e comparativos de programas.",u:"https://www.pontospravoar.com/",top:"Destaques 🇧🇷",sub:"Portais BR",tags:["Brasil","Guia"]},
-    {t:"Melhores Destinos",d:"Alertas de passagens baratas e promoções.",u:"https://www.melhoresdestinos.com.br/",top:"Destaques 🇧🇷",sub:"Portais BR",tags:["Brasil","Promo"]},
-    {t:"Mestre das Milhas",d:"Conteúdo clássico sobre programas e emissões.",u:"https://www.mestredasmilhas.com/",top:"Destaques 🇧🇷",sub:"Portais BR",tags:["Brasil","Guia"]},
-    {t:"Falando de Viagem",d:"Dicas, relatos e comparativos.",u:"https://www.falandodeviagem.com.br/",top:"Destaques 🇧🇷",sub:"Portais BR",tags:["Brasil","Guia"]},
+    /* Destaques 🇧🇷 */
+    {t:"Passageiro de Primeira",d:"Blog de referência (BR).",u:"https://passageirodeprimeira.com/",top:"Destaques 🇧🇷",sub:"Portais BR"},
+    {t:"Pontos pra Voar",d:"Comparativos e notícias.",u:"https://www.pontospravoar.com/",top:"Destaques 🇧🇷",sub:"Portais BR"},
+    {t:"Melhores Destinos",d:"Achados de passagens cash.",u:"https://www.melhoresdestinos.com.br/",top:"Destaques 🇧🇷",sub:"Portais BR"},
+    {t:"Mestre das Milhas",d:"Conteúdo clássico.",u:"https://www.mestredasmilhas.com/",top:"Destaques 🇧🇷",sub:"Portais BR"},
+    {t:"Falando de Viagem",d:"Relatos e comparativos.",u:"https://www.falandodeviagem.com.br/",top:"Destaques 🇧🇷",sub:"Portais BR"},
 
-    /* --- Estratégias de Emissão --- */
-    {t:"Sweet spots (referências)",d:"Coleta de ideias de rotas de alto valor.",u:"https://www.google.com/search?q=sweet+spots+award+travel",top:"Estratégias de Emissão",sub:"Fundamentos",tags:["Sweet spot","Guia"]},
-    {t:"Stopover & Open-jaw",d:"Conceitos para maximizar um bilhete.",u:"https://www.google.com/search?q=stopover+open+jaw+award",top:"Estratégias de Emissão",sub:"Fundamentos",tags:["Stopover","Open-jaw","Guia"]},
-    {t:"Status Match & Challenge",d:"Como obter/status com match ou desafio.",u:"https://www.google.com/search?q=status+match+airlines",top:"Estratégias de Emissão",sub:"Status",tags:["Status match","Guia"]},
-    {t:"Upgrades com milhas",d:"Regras de upgrades por companhia/programa.",u:"https://www.google.com/search?q=airline+upgrade+with+miles+rules",top:"Estratégias de Emissão",sub:"Upgrades",tags:["Upgrade","Guia"]},
+    /* Programas & Alianças — Programas Brasileiros */
+    {t:"Smiles (GOL)",d:"Programa BR.",u:"https://www.smiles.com.br/",top:"Programas & Alianças",sub:"Programas Brasileiros"},
+    {t:"LATAM Pass",d:"Programa LATAM.",u:"https://www.latampass.com/pt_br/",top:"Programas & Alianças",sub:"Programas Brasileiros"},
+    {t:"TudoAzul (AZUL)",d:"Programa Azul.",u:"https://tudoazul.voeazul.com.br/web/tudoazul",top:"Programas & Alianças",sub:"Programas Brasileiros"},
 
-    /* --- Programas & Alianças --- */
-    {t:"Smiles (GOL)",d:"Programa brasileiro. Emissões parceiras e voos GOL.",u:"https://www.smiles.com.br/",top:"Programas & Alianças",sub:"Programas Brasileiros",tags:["Brasil"]},
-    {t:"LATAM Pass",d:"Programa LATAM; parceiros oneworld/avios (via IB/BA).",u:"https://www.latampass.com/pt_br/",top:"Programas & Alianças",sub:"Programas Brasileiros",tags:["Brasil","Oneworld"]},
-    {t:"TudoAzul (AZUL)",d:"Programa da Azul; parcerias estratégicas.",u:"https://tudoazul.voeazul.com.br/web/tudoazul",top:"Programas & Alianças",sub:"Programas Brasileiros",tags:["Brasil"]},
-    {t:"TAP Miles&Go",d:"Programa Star (PT); boas oportunidades.",u:"https://www.flytap.com/pt-br/miles-and-go",top:"Programas & Alianças",sub:"Star Alliance",tags:["Star Alliance"]},
-    {t:"Avianca LifeMiles",d:"Vários sweet spots em parceiros Star.",u:"https://www.lifemiles.com/",top:"Programas & Alianças",sub:"Star Alliance",tags:["Star Alliance","Sweet spot"]},
-    {t:"United MileagePlus",d:"Busca robusta na Star.",u:"https://www.united.com/en/us/frequent-flyer/overview",top:"Programas & Alianças",sub:"Star Alliance",tags:["Star Alliance"]},
-    {t:"Turkish Miles&Smiles",d:"Tabela Star com bons valores.",u:"https://www.turkishairlines.com/en-int/miles-and-smiles/",top:"Programas & Alianças",sub:"Star Alliance",tags:["Star Alliance"]},
-    {t:"British Airways Executive Club",d:"Avios por distância; emissões curtas.",u:"https://www.britishairways.com/en-us/executive-club",top:"Programas & Alianças",sub:"Oneworld/Avios",tags:["Oneworld","Avios"]},
-    {t:"Iberia Plus",d:"Avios; ótimos valores ibéricos e pontes.",u:"https://www.iberia.com/pt/iberiaplus/",top:"Programas & Alianças",sub:"Oneworld/Avios",tags:["Oneworld","Avios"]},
-    {t:"Qatar Airways Privilege Club",d:"Avios integrados (transfer BA/IB).",u:"https://www.qatarairways.com/en/Privilege-Club.html",top:"Programas & Alianças",sub:"Oneworld/Avios",tags:["Oneworld","Avios"]},
-    {t:"Flying Blue (AF/KLM)",d:"Promo Rewards mensais; SkyTeam.",u:"https://www.flyingblue.com/",top:"Programas & Alianças",sub:"SkyTeam",tags:["SkyTeam","Promo"]},
-    {t:"Delta SkyMiles",d:"Tabela dinâmica; rede SkyTeam.",u:"https://www.delta.com/skymiles",top:"Programas & Alianças",sub:"SkyTeam",tags:["SkyTeam"]},
+    /* Programas & Alianças — Star Alliance (ampliado) */
+    {t:"TAP Miles&Go",d:"Star Alliance (PT).",u:"https://www.flytap.com/pt-br/miles-and-go",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Avianca LifeMiles",d:"Star Alliance.",u:"https://www.lifemiles.com/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"United MileagePlus",d:"Star Alliance.",u:"https://www.united.com/en/us/frequent-flyer/overview",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Turkish Miles&Smiles",d:"Star Alliance.",u:"https://www.turkishairlines.com/en-int/miles-and-smiles/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Air Canada Aeroplan",d:"Parceiro forte na Star.",u:"https://www.aircanada.com/aeroplan",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"ANA Mileage Club",d:"Boas emissões Ásia.",u:"https://www.ana.co.jp/en/jp/amc/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Singapore KrisFlyer",d:"Ótimos produtos SQ.",u:"https://www.singaporeair.com/pt_BR/sg/ppsclub-krisflyer/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Lufthansa Miles & More",d:"Rede LH/OS/LX/LOT etc.",u:"https://www.miles-and-more.com/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"SWISS (Miles & More)",d:"Parceiro suíço.",u:"https://www.swiss.com/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Austrian (Miles & More)",d:"Parceiro austríaco.",u:"https://www.austrian.com/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"SAS EuroBonus",d:"Europa Norte.",u:"https://www.flysas.com/en/eurobonus/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"EVA Air Infinity MileageLands",d:"Ásia/Taiwan.",u:"https://www.evaair.com/en-global/infinity-mileagelands/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Thai Royal Orchid Plus",d:"Sudeste Asiático.",u:"https://www.thaiairways.com/en/rop/index.page",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Air China PhoenixMiles",d:"China continental.",u:"https://ffp.airchina.com.cn/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Asiana Club",d:"Coreia do Sul.",u:"https://flyasiana.com/C/BR/EN/mypage/club-introduce",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Ethiopian ShebaMiles",d:"África.",u:"https://www.ethiopianairlines.com/aa/shebamiles",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"EgyptAir Plus",d:"Norte da África.",u:"https://www.egyptair.com/en/flyer/Pages/egyptair-plus.aspx",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"South African Voyager",d:"África Austral.",u:"https://www.flysaa.com/za/en/voyager/aboutVoyager.html",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Copa ConnectMiles",d:"Américas.",u:"https://www.copaair.com/en/web/gs/connectmiles",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"LOT Miles & More",d:"Polônia/EU.",u:"https://www.lot.com/pl/en/miles-and-more",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Aegean Miles+Bonus",d:"Grécia/Europa.",u:"https://en.aegeanair.com/milesandbonus/",top:"Programas & Alianças",sub:"Star Alliance"},
+    {t:"Shenzhen Airlines",d:"China.",u:"http://www.shenzhenair.com/",top:"Programas & Alianças",sub:"Star Alliance"},
 
-    /* --- Transferências & Cartões --- */
-    {t:"Rotas de transferência (pesquisa)",d:"Parceiros banco → programa (BR/EUA/EU).",u:"https://www.google.com/search?q=bank+points+transfer+partners",top:"Transferências & Cartões",sub:"Panorama",tags:["Transferência"]},
-    {t:"Avios — mover entre carteiras",d:"BA/IB/QR/AE (como transferir).",u:"https://www.google.com/search?q=move+transfer+avios+between+iberia+british+qatar",top:"Transferências & Cartões",sub:"Avios",tags:["Avios","Transferência"]},
-    {t:"Livelo (BR)",d:"Parceiros e prazos de crédito.",u:"https://www.livelo.com.br/partners",top:"Transferências & Cartões",sub:"Brasil",tags:["Transferência"]},
-    {t:"Esfera (BR)",d:"Campanhas e parceiros.",u:"https://www.esfera.com.vc/",top:"Transferências & Cartões",sub:"Brasil",tags:["Transferência"]},
-    {t:"iupp/porto/itaucard (BR)",d:"Ecossistemas de pontos/cartões.",u:"https://www.google.com/search?q=parceiros+transferencia+pontos+cartoes+brasil",top:"Transferências & Cartões",sub:"Brasil",tags:["Transferência"]},
+    /* Programas & Alianças — Oneworld (ampliado) */
+    {t:"American AAdvantage",d:"Rede Oneworld.",u:"https://www.aa.com/loyalty/advantage-program",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"Alaska Mileage Plan",d:"Boas tabelas parceiras.",u:"https://www.alaskaair.com/content/mileage-plan",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"British Airways Executive Club",d:"Avios por distância.",u:"https://www.britishairways.com/en-us/executive-club",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"Iberia Plus",d:"Avios Iberia.",u:"https://www.iberia.com/pt/iberiaplus/",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"Qatar Privilege Club",d:"Avios QR.",u:"https://www.qatarairways.com/en/Privilege-Club.html",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"Finnair Plus",d:"Agora com Avios.",u:"https://www.finnair.com/plus",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"Cathay (Asia Miles)",d:"Hong Kong.",u:"https://www.cathaypacific.com/cx/en_HK/membership.html",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"Japan Airlines JMB",d:"Ásia/Japão.",u:"https://www.jal.co.jp/en/jmb/",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"Qantas Frequent Flyer",d:"Austrália.",u:"https://www.qantas.com/au/en/frequent-flyer.html",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"Royal Air Maroc Safar Flyer",d:"Marrocos.",u:"https://www.royalairmaroc.com/ma-en/safar-flyer",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"Royal Jordanian Royal Club",d:"Jordânia.",u:"https://www.rj.com/en/loyalty-program/royal-club",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"SriLankan FlySmiLes",d:"Sul da Ásia.",u:"https://www.srilankan.com/en_uk/flysmiles",top:"Programas & Alianças",sub:"Oneworld"},
+    {t:"Malaysia Airlines Enrich",d:"Sudeste Asiático.",u:"https://www.malaysiaairlines.com/my/en/enrich.html",top:"Programas & Alianças",sub:"Oneworld"},
 
-    /* --- Ferramentas de Busca --- */
-    {t:"Google Flights",d:"Matriz de datas/preços (cash).",u:"https://www.google.com/travel/flights",top:"Ferramentas de Busca",sub:"Metabusca",tags:["Ferramenta"]},
-    {t:"Skyscanner",d:"Busca ampla por rotas.",u:"https://www.skyscanner.com.br",top:"Ferramentas de Busca",sub:"Metabusca",tags:["Ferramenta"]},
-    {t:"ITA Matrix",d:"Busca avançada (códigos/filters).",u:"https://matrix.itasoftware.com",top:"Ferramentas de Busca",sub:"Avançado",tags:["Ferramenta"]},
-    {t:"Seats.aero",d:"Achados rápidos de prêmio.",u:"https://seats.aero",top:"Ferramentas de Busca",sub:"Prêmios",tags:["Ferramenta"]},
-    {t:"Point.Me",d:"Planner de emissões com milhas.",u:"https://point.me",top:"Ferramentas de Busca",sub:"Prêmios",tags:["Ferramenta"]},
-    {t:"ExpertFlyer",d:"Inventário/assentos/alertas (pago).",u:"https://www.expertflyer.com/",top:"Ferramentas de Busca",sub:"Avançado",tags:["Ferramenta"]},
-    {t:"AwardWallet",d:"Controle de saldos/alertas de validade.",u:"https://awardwallet.com",top:"Ferramentas de Busca",sub:"Gestão de contas",tags:["Ferramenta"]},
-    {t:"Great Circle Mapper",d:"Rotas e distâncias.",u:"https://www.gcmap.com/",top:"Ferramentas de Busca",sub:"Mapas & distâncias",tags:["Ferramenta"]},
+    /* Programas & Alianças — SkyTeam (ampliado) */
+    {t:"Flying Blue (AF/KLM)",d:"AF/KL; Promo Rewards.",u:"https://www.flyingblue.com/",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"Delta SkyMiles",d:"Rede DL.",u:"https://www.delta.com/skymiles",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"Aeroméxico Club Premier",d:"México.",u:"https://www.clubpremier.com/",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"Korean Air SKYPASS",d:"Coreia.",u:"https://www.koreanair.com/korea/en/sky-pass",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"China Airlines Dynasty",d:"Taiwan.",u:"https://www.china-airlines.com/us/en/dynasty-flyer",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"China Eastern Eastern Miles",d:"China.",u:"https://www.ceair.com/",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"GarudaMiles",d:"Indonésia.",u:"https://www.garuda-indonesia.com/other-countries/en/garudamiles",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"Vietnam Airlines Lotusmiles",d:"Vietnã.",u:"https://www.vietnamairlines.com/vn/en/lotusmiles",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"Aerolíneas Argentinas AR Plus",d:"Argentina.",u:"https://www.aerolineas.com.ar/",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"Air Europa SUMA",d:"Espanha.",u:"https://www.aireuropa.com/en/flights/air-europa-suma",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"ITA Airways Volare",d:"Itália.",u:"https://www.itaspa.com/en_en/volare.html",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"Saudia Alfursan",d:"Arábia Saudita.",u:"https://www.saudia.com/loyalty-program",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"Kenya Airways (Asante)",d:"Quênia.",u:"https://www.kenya-airways.com/",top:"Programas & Alianças",sub:"SkyTeam"},
+    {t:"TAROM",d:"Romênia.",u:"https://www.tarom.ro/en",top:"Programas & Alianças",sub:"SkyTeam"},
 
-    /* --- Hotéis & Parceiros --- */
-    {t:"Marriott Bonvoy",d:"Programa de hotéis; transferências.",u:"https://www.marriott.com/loyalty.mi",top:"Hotéis & Parceiros",sub:"Hotéis",tags:["Transferência"]},
-    {t:"World of Hyatt",d:"Ótima tabela prêmio.",u:"https://world.hyatt.com/",top:"Hotéis & Parceiros",sub:"Hotéis",tags:["Sweet spot"]},
-    {t:"Hilton Honors",d:"Rede extensa; promoções frequentes.",u:"https://www.hilton.com/en/hilton-honors/",top:"Hotéis & Parceiros",sub:"Hotéis",tags:[]},
-    {t:"IHG One Rewards",d:"Rede IHG (InterContinental, etc.).",u:"https://www.ihg.com/onerewards/content/us/en/home",top:"Hotéis & Parceiros",sub:"Hotéis",tags:[]},
-    {t:"ALL – Accor Live Limitless",d:"Programa com presença forte no BR.",u:"https://all.accor.com/loyalty-program/reasonstojoin/index.en.shtml",top:"Hotéis & Parceiros",sub:"Hotéis",tags:[]},
-    {t:"Carros — ganhar milhas",d:"Parceiros (Avis, Budget, etc.).",u:"https://www.google.com/search?q=car+rentals+earn+airline+miles+partners",top:"Hotéis & Parceiros",sub:"Carros",tags:[]},
+    /* Transferências & Cartões (com Avios link específico) */
+    {t:"Parceiros de transferência",d:"Mapa banco → programa (pesquisa).",u:"https://www.google.com/search?q=bank+points+transfer+partners",top:"Transferências & Cartões",sub:"Panorama"},
+    {t:"Livelo (BR)",d:"Parceiros e prazos.",u:"https://www.livelo.com.br/partners",top:"Transferências & Cartões",sub:"Brasil"},
+    {t:"Esfera (BR)",d:"Campanhas e parceiros.",u:"https://www.esfera.com.vc/",top:"Transferências & Cartões",sub:"Brasil"},
+    {t:"Avios — mover entre carteiras",d:"Como transferir Avios entre BA ↔ Iberia.",u:"https://passageirodeprimeira.com/transferir-avios-british-iberia/",top:"Transferências & Cartões",sub:"Avios"},
 
-    /* --- Alertas & Promoções --- */
-    {t:"Promoções Flying Blue",d:"Ofertas mensais com milhas reduzidas.",u:"https://www.flyingblue.com/en/promo-rewards",top:"Alertas & Promoções",sub:"Parceiros Internacionais",tags:["Promo","SkyTeam"]},
-    {t:"Promoções Smiles",d:"Bônus de transferência e emissões.",u:"https://www.smiles.com.br/promocoes",top:"Alertas & Promoções",sub:"Brasil",tags:["Brasil","Promo"]},
-    {t:"Ofertas LATAM Pass",d:"Campanhas e oportunidades LATAM.",u:"https://www.latampass.com/pt_br/ofertas",top:"Alertas & Promoções",sub:"Brasil",tags:["Brasil","Promo"]},
-    {t:"Ofertas TudoAzul",d:"Campanhas do programa Azul.",u:"https://tudoazul.voeazul.com.br/web/tudoazul/promocao",top:"Alertas & Promoções",sub:"Brasil",tags:["Brasil","Promo"]},
-    {t:"Passagens Promo",d:"Ofertas e cupons (BR).",u:"https://www.passagenspromo.com.br/",top:"Alertas & Promoções",sub:"Brasil",tags:["Brasil","Promo"]},
-    {t:"Passagens Imperdíveis",d:"Achados e tarifas baixas (BR).",u:"https://www.passagensimperdiveis.com.br/",top:"Alertas & Promoções",sub:"Brasil",tags:["Brasil","Promo"]},
+    /* Hotéis & Parceiros */
+    {t:"Marriott Bonvoy",d:"Programa de hotéis.",u:"https://www.marriott.com/loyalty.mi",top:"Hotéis & Parceiros",sub:"Hotéis"},
+    {t:"World of Hyatt",d:"Tabela prêmio forte.",u:"https://world.hyatt.com/",top:"Hotéis & Parceiros",sub:"Hotéis"},
+    {t:"Hilton Honors",d:"Rede extensa.",u:"https://www.hilton.com/en/hilton-honors/",top:"Hotéis & Parceiros",sub:"Hotéis"},
+    {t:"IHG One Rewards",d:"Rede IHG.",u:"https://www.ihg.com/onerewards/content/us/en/home",top:"Hotéis & Parceiros",sub:"Hotéis"},
+    {t:"ALL – Accor Live Limitless",d:"Forte no BR.",u:"https://all.accor.com/loyalty-program/reasonstojoin/index.en.shtml",top:"Hotéis & Parceiros",sub:"Hotéis"},
 
-    /* --- Pesquisas & Comunidades --- */
-    {t:"FlyerTalk",d:"Fórum clássico de milhas e cias.",u:"https://www.flyertalk.com/forum/",top:"Pesquisas & Comunidades",sub:"Comunidades",tags:["Guia"]},
-    {t:"Reddit r/awardtravel",d:"Discussões e achados.",u:"https://www.reddit.com/r/awardtravel/",top:"Pesquisas & Comunidades",sub:"Comunidades",tags:["Guia"]},
-    {t:"One Mile at a Time",d:"Reviews e estratégias (EN).",u:"https://onemileatatime.com/",top:"Pesquisas & Comunidades",sub:"Portais EN",tags:["Guia"]},
-    {t:"The Points Guy",d:"Guias e notícias (EN).",u:"https://thepointsguy.com/",top:"Pesquisas & Comunidades",sub:"Portais EN",tags:["Guia"]},
-
-    /* --- Regras & Políticas --- */
-    {t:"Regras de Bagagem (busca)",d:"Compare políticas por cia/rota.",u:"https://www.google.com/search?q=baggage+policy+airlines",top:"Regras & Políticas",sub:"Bagagem",tags:[]},
-    {t:"Award charts (listas)",d:"Coletâneas de tabelas de emissão.",u:"https://www.google.com/search?q=award+chart+list",top:"Regras & Políticas",sub:"Tabelas",tags:["Sweet spot"]},
-    {t:"Direitos do Passageiro — ANAC (BR)",d:"Regras e assistência ao passageiro.",u:"https://www.gov.br/anac/pt-br/assuntos/passageiros",top:"Regras & Políticas",sub:"Direitos do Passageiro",tags:["Brasil"]},
-    {t:"EU261 — Direitos na UE",d:"Reembolsos e compensações na União Europeia.",u:"https://europa.eu/youreurope/citizens/travel/passenger-rights/air/index_pt.htm",top:"Regras & Políticas",sub:"Direitos do Passageiro",tags:[]},
-
-    /* --- Tutoriais & Guias --- */
-    {t:"Buscar disponibilidade prêmio",d:"Fluxo de pesquisa passo a passo.",u:"https://www.google.com/search?q=how+to+search+award+availability",top:"Tutoriais & Guias",sub:"Pesquisa",tags:["Guia"]},
-    {t:"Emitindo com Avios",d:"Exemplos práticos (BA/IB/QR).",u:"https://www.google.com/search?q=how+to+book+with+avios",top:"Tutoriais & Guias",sub:"Avios",tags:["Guia","Avios"]},
-    {t:"Emitindo Star (United/LifeMiles)",d:"Técnicas para encontrar assentos.",u:"https://www.google.com/search?q=how+to+book+united+lifemiles+award",top:"Tutoriais & Guias",sub:"Star Alliance",tags:["Guia","Star Alliance"]},
-
-    /* --- Planilhas & Templates --- */
-    {t:"Templates de controle",d:"Planilhas para planejar emissões.",u:"https://www.google.com/search?q=award+travel+spreadsheet+template",top:"Planilhas & Templates",sub:"Planilhas",tags:["Ferramenta"]},
-    {t:"Calculadora de distâncias (GCMap)",d:"Base para programas por distância.",u:"https://www.gcmap.com/",top:"Planilhas & Templates",sub:"Cálculo",tags:["Ferramenta"]}
+    /* Buscas (atalhos úteis) */
+    {t:"Google Flights",d:"Pesquisa global de voos comerciais.",u:"https://www.google.com/travel/flights",top:"Buscas",sub:"Metabuscadores"},
+    {t:"ITA Matrix",d:"Busca avançada por códigos e tarifas.",u:"https://matrix.itasoftware.com",top:"Buscas",sub:"Avançado"},
+    {t:"Seats.aero",d:"Monitor de assentos prêmio.",u:"https://seats.aero",top:"Buscas",sub:"Prêmios"},
+    {t:"AwardWallet",d:"Rastreamento de pontos e milhas.",u:"https://awardwallet.com",top:"Buscas",sub:"Gestão"},
+    {t:"ExpertFlyer",d:"Inventário de assentos e alertas.",u:"https://www.expertflyer.com/",top:"Buscas",sub:"Avançado"},
+    {t:"Point.Me",d:"Planejador de emissões prêmio.",u:"https://point.me",top:"Buscas",sub:"Prêmios"},
+    {t:"GCMap",d:"Mapeamento de rotas e distâncias.",u:"https://www.gcmap.com/",top:"Buscas",sub:"Mapas & distâncias"},
+    {t:"Skyscanner",d:"Busca ampla de passagens aéreas.",u:"https://www.skyscanner.com.br",top:"Buscas",sub:"Metabuscadores"}
   ]
 };
 
-/* ===== 2) ESTADO/LS ===== */
-const $ = sel => document.querySelector(sel);
-const LS = { favorites:"mileshub:favorites", custom:"mileshub:customLinks", theme:"mileshub:theme" };
-let state = { topico: DATA.topicos[0], tag: null, query: "", onlyFav:false };
+/* ===== Estado/LS ===== */
+const LS = "milhasv12:fav";
+const loadFav = ()=> new Set(JSON.parse(localStorage.getItem(LS)||"[]"));
+const saveFav = (s)=> localStorage.setItem(LS, JSON.stringify([...s]));
+let state = { topico: DATA.topicos[0], query: "" };
 
-const load = (k,f)=>{ try{return JSON.parse(localStorage.getItem(k)) ?? f;}catch(e){return f;} };
-const save = (k,v)=>localStorage.setItem(k,JSON.stringify(v));
-const favorites = ()=> new Set(load(LS.favorites, []));
-const allLinks = ()=> [...DATA.links, ...load(LS.custom, [])];
+/* ===== Helpers ===== */
+const $ = s => document.querySelector(s);
+function groupBySubtopic(arr){
+  const m = new Map();
+  arr.forEach(l=>{ const k=(l.top==="⭐ Favoritos"?"⭐ Favoritos":(l.sub||"Outros")); if(!m.has(k)) m.set(k,[]); m.get(k).push(l); });
+  return [...m.entries()].sort((a,b)=>a[0].localeCompare(b[0],'pt-BR'));
+}
 
-/* ===== 3) RENDER ===== */
+/* ===== Render ===== */
 function renderTabs(){
   const el = $("#tabs"); el.innerHTML = "";
   DATA.topicos.forEach(t=>{
     const b = document.createElement("button");
     b.className = "tab"+(state.topico===t?" active":"");
     b.textContent = t;
-    b.onclick = ()=>{ state.topico=t; state.tag=null; state.query=""; render(); window.scrollTo({top:0,behavior:"smooth"}); };
+    b.onclick = ()=>{ state.topico=t; state.query=""; render(); window.scrollTo({top:0,behavior:"smooth"}); };
     el.appendChild(b);
   });
 }
-function renderChips(){
-  const el = $("#chips"); el.innerHTML = "";
-  const arr = ["Todos", ...DATA.tags];
-  arr.forEach(t=>{
-    const c = document.createElement("div");
-    c.className = "chip"+((!state.tag && t==="Todos") || state.tag===t ? " active":"");
-    c.textContent = t;
-    c.onclick = ()=>{ state.tag = (t==="Todos")? null : t; render(); };
-    el.appendChild(c);
-  });
+
+function getVisibleItems(){
+  const favs = loadFav();
+  let items = DATA.links.slice();
+
+  if(state.query.trim()!==""){
+    // Busca global em todas as categorias
+    const q = state.query.toLowerCase();
+    items = items.filter(l => (l.t+" "+(l.d||"")+" "+(l.sub||"")+" "+l.top).toLowerCase().includes(q));
+    return {items, favs, isGlobal:true};
+  }
+
+  // Sem busca: usa a aba atual
+  if(state.topico==="⭐ Favoritos"){
+    items = items.filter(l => favs.has(l.u));
+  } else {
+    items = items.filter(l => l.top===state.topico);
+  }
+  return {items, favs, isGlobal:false};
 }
-function matchQuery(l,q){
-  if(!q) return true;
-  const s = (l.t+" "+(l.d||"")+" "+(l.tags||[]).join(" ")+" "+(l.sub||"")).toLowerCase();
-  return s.includes(q.toLowerCase());
-}
-function groupBySubtopic(links){
-  const map = new Map();
-  links.forEach(l=>{
-    const key = l.sub || "Outros";
-    if(!map.has(key)) map.set(key, []);
-    map.get(key).push(l);
-  });
-  return [...map.entries()].sort((a,b)=>a[0].localeCompare(b[0],'pt-BR'));
-}
+
 function renderGroups(){
   const wrap = $("#groups"); wrap.innerHTML = "";
-  const favs = favorites();
-  let links = allLinks().filter(l=>l.top===state.topico);
-  if(state.tag) links = links.filter(l=>(l.tags||[]).includes(state.tag));
-  if(state.query) links = links.filter(l=>matchQuery(l, state.query));
-  if(state.onlyFav) links = links.filter(l=>favs.has(l.u));
+  const banner = $("#banner"); banner.innerHTML = "";
+  const {items, favs, isGlobal} = getVisibleItems();
 
-  links.sort((a,b)=>{
-    const fa=favs.has(a.u), fb=favs.has(b.u);
-    if(fa!==fb) return fa?-1:1;
-    return a.t.localeCompare(b.t,'pt-BR');
-  });
+  if(isGlobal){
+    const info = document.createElement("div");
+    info.className = "banner";
+    const count = items.length;
+    info.innerHTML = `🔍 Exibindo <strong>${count}</strong> resultado${count===1?"":"s"} em <strong>todas</strong> as categorias. Limpe o campo para voltar à aba selecionada.`;
+    banner.appendChild(info);
+  }
 
-  const groups = groupBySubtopic(links);
+  // Intro do tópico (somente quando não está em busca global)
+  if(!isGlobal && TOPIC_INTRO[state.topico]){
+    const intro = document.createElement("section");
+    intro.className = "group";
+    intro.innerHTML = `<div class="intro">${TOPIC_INTRO[state.topico]}</div>`;
+    wrap.appendChild(intro);
+  }
+
+  // Agrupar por subtópico
+  const groups = groupBySubtopic(items);
   if(groups.length===0){
     const empty = document.createElement("div");
-    empty.style.cssText = "opacity:.85;padding:12px;border:1px dashed #2b3b55;border-radius:12px";
-    empty.textContent = "Nenhum link encontrado para os filtros atuais.";
+    empty.style.cssText="opacity:.85;padding:12px;border:1px dashed #2b3b55;border-radius:12px";
+    empty.textContent = (state.topico==="⭐ Favoritos" && !isGlobal) ? "Você ainda não adicionou favoritos." : "Nenhum link encontrado.";
     wrap.appendChild(empty);
     return;
   }
 
-  groups.forEach(([sub, items])=>{
-    const section = document.createElement("section");
-    section.className = "group";
-    section.innerHTML = `<h2>${sub}</h2><div class="grid"></div>`;
-    const grid = section.querySelector(".grid");
-    items.forEach(l=>{
+  groups.forEach(([sub, list])=>{
+    const sec = document.createElement("section");
+    sec.className = "group";
+    sec.innerHTML = `<h2>${sub}</h2><div class="grid"></div>`;
+    const grid = sec.querySelector(".grid");
+    list.forEach(l=>{
       const card = document.createElement("div");
       card.className = "card";
+      const fav = favs.has(l.u);
       card.innerHTML = `
-        <h3><a href="${l.u}" target="_blank" rel="noopener noreferrer">${l.t}</a></h3>
+        <h3><a href="${l.u}" target="_blank" rel="noopener">${l.t}</a></h3>
         <p>${l.d||""}</p>
         <div class="meta">
-          ${(l.tags||[]).map(t=>`<span class="tag">${t}</span>`).join("")}
-          <span class="star" title="Favoritar" role="button" data-url="${l.u}" data-active="${favs.has(l.u)}">⭐</span>
+          <span class="pill">${l.top}</span>
+          <span class="star" data-url="${l.u}" title="Favoritar">${fav?"⭐ Favorito":"☆ Favoritar"}</span>
         </div>
       `;
-      card.querySelector(".star").onclick = (e)=>toggleFavorite(e.target.dataset.url);
+      card.querySelector(".star").onclick = (e)=>{
+        const url = e.target.dataset.url;
+        if(favs.has(url)) favs.delete(url); else favs.add(url);
+        saveFav(favs); render();
+      };
       grid.appendChild(card);
     });
-    wrap.appendChild(section);
+    wrap.appendChild(sec);
   });
 }
-function render(){ renderTabs(); renderChips(); renderGroups(); }
 
-/* ===== 4) AÇÕES ===== */
-$("#searchInput").addEventListener("input",(e)=>{ state.query=e.target.value; render(); });
-document.addEventListener("keydown",(e)=>{ if(e.key==="/"){ e.preventDefault(); $("#searchInput").focus(); }});
-$("#toggleTheme").onclick = ()=>{
-  const curr = load(LS.theme,"dark");
-  const next = curr==="dark" ? "light":"dark";
-  document.body.style.background = next==="light" ? "#f4f7fb" : "var(--bg)";
-  save(LS.theme,next);
-};
-function toggleFavorite(url){
-  const fav = favorites();
-  fav.has(url)? fav.delete(url) : fav.add(url);
-  save(LS.favorites,[...fav]); render();
+function render(){
+  renderTabs(); renderGroups();
 }
-$("#showFavorites").onclick = ()=>{
-  state.onlyFav = !state.onlyFav;
-  $("#showFavorites").textContent = state.onlyFav ? "⭐ Apenas favoritos" : "⭐ Favoritos";
-  render();
-};
-
-/* ===== 5) Importar / Exportar / Adicionar ===== */
-const modal = $("#modal");
-const openModal=(title,body)=>{ $("#modalTitle").textContent=title; $("#modalBody").innerHTML=body; modal.classList.remove("hidden"); };
-$("#closeModal").onclick = ()=>modal.classList.add("hidden");
-modal.addEventListener("click",(e)=>{ if(e.target===modal) modal.classList.add("hidden"); });
-
-$("#exportBtn").onclick = ()=>{
-  const payload = { custom: load(LS.custom,[]), favorites:[...favorites()], version:3 };
-  openModal("Exportar (JSON)", `
-    <p>Copie o JSON abaixo para salvar/compartilhar. Depois use <em>Importar</em> para carregar.</p>
-    <textarea style="width:100%;height:260px;background:#0f1c30;color:#e7eef6;border:1px solid #22324f;border-radius:8px;padding:8px">${JSON.stringify(payload,null,2)}</textarea>
-  `);
-};
-$("#importBtn").onclick = ()=>{
-  openModal("Importar (JSON)", `
-    <p>Cole o JSON exportado anteriormente e clique em <strong>Importar</strong>.</p>
-    <textarea id="importArea" style="width:100%;height:220px;background:#0f1c30;color:#e7eef6;border:1px solid #22324f;border-radius:8px;padding:8px"></textarea>
-    <div style="margin-top:8px;display:flex;gap:8px;justify-content:flex-end">
-      <button class="btn" id="cancelImport">Cancelar</button>
-      <button class="btn brand" id="doImport">Importar</button>
-    </div>
-  `);
-  $("#cancelImport").onclick = ()=>modal.classList.add("hidden");
-  $("#doImport").onclick = ()=>{
-    try{
-      const obj = JSON.parse($("#importArea").value);
-      if(obj.custom) save(LS.custom, obj.custom);
-      if(obj.favorites) save(LS.favorites, obj.favorites);
-      modal.classList.add("hidden"); render(); alert("Importado com sucesso!");
-    }catch(e){ alert("JSON inválido."); }
-  };
-};
-$("#addBtn").onclick = ()=>{
-  openModal("Adicionar link ao tópico", `
-    <div style="display:grid;gap:8px;grid-template-columns:1fr 1fr">
-      <label>Título<br/><input id="fTitle" style="width:100%;padding:8px;border-radius:8px;border:1px solid #22324f;background:#0f1c30;color:#e7eef8"/></label>
-      <label>URL<br/><input id="fURL" style="width:100%;padding:8px;border-radius:8px;border:1px solid #22324f;background:#0f1c30;color:#e7eef8" placeholder="https://..."/></label>
-    </div>
-    <label style="display:block;margin-top:8px">Descrição<br/><input id="fDesc" style="width:100%;padding:8px;border-radius:8px;border:1px solid #22324f;background:#0f1c30;color:#e7eef8"/></label>
-    <div style="display:grid;gap:8px;grid-template-columns:1fr 1fr;margin-top:8px">
-      <label>Tópico<br/>
-        <select id="fTop" style="width:100%;padding:8px;border-radius:8px;border:1px solid #22324f;background:#0f1c30;color:#e7eef8">
-          ${DATA.topicos.map(t=>`<option>${t}</option>`).join("")}
-        </select>
-      </label>
-      <label>Subtópico<br/><input id="fSub" style="width:100%;padding:8px;border-radius:8px;border:1px solid #22324f;background:#0f1c30;color:#e7eef8" placeholder="ex.: Programas Brasileiros"/></label>
-    </div>
-    <label style="display:block;margin-top:8px">Tags (separe por vírgula)<br/><input id="fTags" style="width:100%;padding:8px;border-radius:8px;border:1px solid #22324f;background:#0f1c30;color:#e7eef8" placeholder="Brasil, Promo, Star Alliance, Avios"/></label>
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:10px">
-      <button class="btn" id="cancelAdd">Cancelar</button>
-      <button class="btn brand" id="saveAdd">Salvar</button>
-    </div>
-  `);
-  $("#cancelAdd").onclick = ()=>modal.classList.add("hidden");
-  $("#saveAdd").onclick = ()=>{
-    const t = $("#fTitle").value.trim();
-    const u = $("#fURL").value.trim();
-    if(!t || !u){ alert("Título e URL são obrigatórios."); return; }
-    const item = {
-      t, u,
-      d: $("#fDesc").value.trim(),
-      top: $("#fTop").value,
-      sub: ($("#fSub").value.trim() || "Outros"),
-      tags: $("#fTags").value.split(",").map(s=>s.trim()).filter(Boolean)
-    };
-    const custom = load(LS.custom, []);
-    custom.push(item); save(LS.custom, custom);
-    modal.classList.add("hidden");
-    state.topico = item.top; state.tag=null; state.query="";
-    render();
-  };
-};
-
-/* ===== 6) INIT ===== */
-(function init(){
-  document.body.style.background = load(LS.theme,"dark")==="light" ? "#f4f7fb" : "var(--bg)";
-  render();
-})();
+$("#searchInput").addEventListener("input",(e)=>{ state.query=e.target.value; render(); });
+render();
 </script>
 </body>
 </html>
